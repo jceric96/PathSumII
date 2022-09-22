@@ -1,8 +1,12 @@
-## Path Sum (Tree)
+## 113. Path SumII (Tree)
 
 Given the root of a binary tree and an integer targetSum, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum. Each path should be returned as a list of the node values, not node references.
 
 A root-to-leaf path is a path starting from the root and ending at any leaf node. A leaf is a node with no children.(Important)
+
+1. Are values of all binary tree nodes integers(or have decimal values of the nodes)?
+2. Can tagetSum be negative integer?
+3. must have a result or not?
 
 Example 1:
 

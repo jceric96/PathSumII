@@ -1,31 +1,47 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PathSumII {
+
     public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
-        List<List<Integer>> results = new ArrayList<>();
-        pathSum(root, targetSum, results, new ArrayList<Integer>());
+
+        List<List<Integer>> results = new ArrayList<List<Integer>>();
+        pathSum(root, targetSum, new ArrayList<Integer>(), results);
         return results;
     }
 
-    public void pathSum(TreeNode root, int targetSum, List<List<Integer>> results, ArrayList<Integer> path) {
+    private void pathSum(TreeNode root, int targetSum, ArrayList<Integer> result, List<List<Integer>> results) {
+        // check if current node is null or not
         if (root == null) {
             return;
         }
+        // change targetSum number
         targetSum -= root.val;
+        // if targetSum is zero and current node is leaf node
         if (targetSum == 0 && root.left == null && root.right == null) {
-            path.add(root.val);
-            results.add(new ArrayList<Integer>(path));
-            path.remove(path.size() - 1);
+            // add current node into result
+            result.add(root.val);
+            // add result array into results array
+            results.add(new ArrayList<>(result));
+            // remove value of the leaf node
+            // to avoid another path includes this leaf node
+            result.remove(result.size() - 1);
             return;
         }
-        path.add(root.val);
-        pathSum(root.left, targetSum, results, path);
-        pathSum(root.right, targetSum, results, path);
-        path.remove(path.size() - 1);
+        // add current node into result
+        result.add(root.val);
+        // find if left side has a path of the targetSum
+        pathSum(root.left, targetSum, result, results);
+        // find if right side has a path of the targetSum
+        pathSum(root.right, targetSum, result, results);
+        // remove the value of the path node(not leaf node)
+        // to avoid another path includes unsatisifed path nodes
+        result.remove(result.size() - 1);
+
     }
 
-    public static void main(String[] args) throws Exception {
-        PathSumII tree = new PathSumII();
+    public static void main(String[] args) {
+        PathSumII sum = new PathSumII();
         TreeNode root = new TreeNode(5);
         root.left = new TreeNode(4);
         root.right = new TreeNode(8);
@@ -39,8 +55,6 @@ public class PathSumII {
         root.right.left.right = null;
         root.right.right.left = new TreeNode(5);
         root.right.right.right = new TreeNode(1);
-
-        int targetSum = 22;
-        System.out.println(tree.pathSum(root, targetSum));
+        System.out.println(sum.pathSum(root, 22));
     }
 }
